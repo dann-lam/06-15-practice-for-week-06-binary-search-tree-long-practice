@@ -118,7 +118,14 @@ function getHeight (rootNode) {
 //
 
 function countNodes (rootNode) {
-  // Your code here
+  let count = 0;
+
+  let bt = new BinarySearchTree()
+
+  bt.root = rootNode
+
+  bt.breadthFirstForEach(() => count++)
+  return count
 }
 
 function balancedTree (rootNode) {

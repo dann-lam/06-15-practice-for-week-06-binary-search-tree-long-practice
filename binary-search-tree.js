@@ -118,6 +118,17 @@ class BinarySearchTree {
       if (shiftedNode.right) { queue.push(shiftedNode.right) }
     }
 
+
+    //-------------------------------
+    // let queue = [this.root];
+
+    // while (queue.length) {
+    //   let shiftedNode = queue.shift();
+    //   console.log(shiftedNode.val)
+    //   if (shiftedNode.left) { queue.push(shiftedNode.left) }
+    //   if (shiftedNode.right) { queue.push(shiftedNode.right) }
+    // }
+    //-------------------------------
     // let queue = new LinkedList();
     // queue.addToTail(this.root);
 
@@ -128,6 +139,17 @@ class BinarySearchTree {
     //   if (shiftedNode.right) { queue.addToTail(shiftedNode.right) }
     // }
   }
+  breadthFirstForEach(cb) {
+    let queue = [this.root];
+    //The callback is increasing count++
+    while (queue.length) {
+      let shiftedNode = queue.shift();
+        //  cb()
+        cb(shiftedNode)
+      if (shiftedNode.left) { queue.push(shiftedNode.left) }
+      if (shiftedNode.right) { queue.push(shiftedNode.right) }
+    }
+}
 
   // Depth First Traversal - Iterative
   depthFirstTraversal() {
