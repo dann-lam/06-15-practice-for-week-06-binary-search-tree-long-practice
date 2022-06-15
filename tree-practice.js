@@ -1,4 +1,4 @@
-const { BinarySearchTree, TreeNode } = require('./binary-search-tree.js');
+const { BinarySearchTree, TreeNode } = require("./binary-search-tree.js");
 // Before starting, copy and paste your guided practice work into the copy
 // of `binary-search-tree.js` in this folder
 
@@ -6,29 +6,23 @@ const { BinarySearchTree, TreeNode } = require('./binary-search-tree.js');
 
 function findMinBST(rootNode) {
   //Go left until next is null.
-  if (!rootNode) return console.log("Stop!")
-  let currNode = rootNode
+  if (!rootNode) return console.log("Stop!");
+  let currNode = rootNode;
   while (currNode.left) {
-    currNode = currNode.left
+    currNode = currNode.left;
   }
-  return currNode.val
-
-
+  return currNode.val;
 }
 
 function findMaxBST(rootNode) {
-
-  if (!rootNode) return console.log("Stop!")
-  let currNode = rootNode
+  if (!rootNode) return console.log("Stop!");
+  let currNode = rootNode;
 
   if (!currNode.right) {
-    return currNode.val
+    return currNode.val;
   }
-  return findMaxBST(currNode.right)
-
-
+  return findMaxBST(currNode.right);
 }
-
 
 /*  if(!rootNode) return console.log("Stop!")
   let currNode = rootNode
@@ -38,29 +32,30 @@ function findMaxBST(rootNode) {
   }
   return currNode.val */
 
-
 function findMinBT(rootNode) {
-  let minVal = rootNode.val
+  let minVal = rootNode.val;
 
-  if (!rootNode) return console.log("Stop! You have violated the law.")
+  if (!rootNode) return console.log("Stop! You have violated the law.");
 
   let queue = [rootNode];
 
   while (queue.length) {
     let shiftedNode = queue.shift();
     if (shiftedNode.val < minVal) {
-      minVal = shiftedNode.val
+      minVal = shiftedNode.val;
     }
-    if (shiftedNode.left) { queue.push(shiftedNode.left) }
-    if (shiftedNode.right) { queue.push(shiftedNode.right) }
+    if (shiftedNode.left) {
+      queue.push(shiftedNode.left);
+    }
+    if (shiftedNode.right) {
+      queue.push(shiftedNode.right);
+    }
   }
 
-  return minVal
+  return minVal;
 }
 
-
 //Should I iteratively or recursively traverse??
-
 
 //Because it's not in order we have go through the entire tree.
 //And I want to keep a variable to know what "min" is.
@@ -88,35 +83,36 @@ function findMaxBT(rootNode) {
 
   let max = -Infinity;
   const updateMax = (node) => {
-    if (node.val > max) { max = node.val }
-  }
+    if (node.val > max) {
+      max = node.val;
+    }
+  };
 
   BinarySearchTree.breadthFirstForEach(rootNode, updateMax);
   return max;
 }
 
 function getHeight(rootNode) {
-  if (!rootNode) return -1
+  if (!rootNode) return -1;
 
   let maxHeight = 0;
   rootNode.height = 0;
   let stack = [rootNode];
 
   while (stack.length) {
-
     let poppedNode = stack.pop();
     //Give nodes properties
     if (poppedNode.left) {
-      poppedNode.left.height = poppedNode.height + 1
-      stack.push(poppedNode.left)
+      poppedNode.left.height = poppedNode.height + 1;
+      stack.push(poppedNode.left);
       //Math method to return max.
     }
     if (poppedNode.right) {
-      poppedNode.right.height = poppedNode.height + 1
-      stack.push(poppedNode.right)
+      poppedNode.right.height = poppedNode.height + 1;
+      stack.push(poppedNode.right);
     }
     if (maxHeight < poppedNode.height) {
-      maxHeight = poppedNode.height
+      maxHeight = poppedNode.height;
     }
     // console.log(`Decremented height: ${maxHeight}`)
   }
@@ -130,8 +126,8 @@ function getHeight(rootNode) {
 function countNodes(rootNode) {
   let count = 0;
 
-  BinarySearchTree.breadthFirstForEach(rootNode, () => count++)
-  return count
+  BinarySearchTree.breadthFirstForEach(rootNode, () => count++);
+  return count;
 }
 
 function balancedTree(rootNode) {
@@ -145,7 +141,8 @@ function balancedTree(rootNode) {
   while (stack.length) {
     let poppedNode = stack.pop();
 
-    let leftHeight = -1; let rightHeight = -1;
+    let leftHeight = -1;
+    let rightHeight = -1;
 
     if (poppedNode.left) {
       leftHeight = getHeight(poppedNode.left);
@@ -153,7 +150,7 @@ function balancedTree(rootNode) {
     }
     if (poppedNode.right) {
       rightHeight = getHeight(poppedNode.right);
-      stack.push(poppedNode.right)
+      stack.push(poppedNode.right);
     }
     if (Math.abs(leftHeight - rightHeight) > 1) {
       return false;
@@ -163,33 +160,61 @@ function balancedTree(rootNode) {
 }
 
 function getParentNode(rootNode, target) {
-  // Your code here
+  let stack = [rootNode];
+  if (rootNode.val === target) {
+    return null;
+  }
+  while (stack.length) {
+    let poppedNode = stack.pop();
+    // console.log(poppedNode.val)
+    if (poppedNode.left) {
+      if (poppedNode.left.val === target) {
+        return poppedNode;
+      }
+      stack.push(poppedNode.left);
+    }
+    if (poppedNode.right) {
+      if (poppedNode.right.val === target) {
+        return poppedNode;
+      }
+      stack.push(poppedNode.right);
+    }
+  }
 }
 
+//Traverse the tree.
+//We have the target, as we traverse the tree, we compare the "currentNode's children's value to the target."
+
+//Recursive
 function inOrderPredecessor(rootNode, target) {
-  // Your code here
-}
+  let currNode = rootNode;
+  if (!curren) return;
+  let prevNode;
 
+  inOrderPredecessor(currentNode.left);
+
+  //We do a check *somewhere*
+  if (currentNode.value === target) {
+    // return currentNode
+    //How do I get the predecessor??
+    //If we hit null or if we have a match
+    //We return the predecessor or null
+  }
+  inOrderPredecessor(currentNode.right);
+}
 
 function deleteNodeBST(rootNode, target) {
   // Do a traversal to find the node. Keep track of the parent
-
   // Undefined if the target cannot be found
-
   // Set target based on parent
-
   // Case 0: Zero children and no parent:
   //   return null
-
   // Case 1: Zero children:
   //   set the parent that points to it to null
-
   // Case 2: Two children:
   //   set the value to its in-order predecessor, then delete the predecessor
-
   // Case 3: One child:
   //   Make the parent point to the child
-
 }
 
 module.exports = {
@@ -202,5 +227,5 @@ module.exports = {
   balancedTree,
   getParentNode,
   inOrderPredecessor,
-  deleteNodeBST
-}
+  deleteNodeBST,
+};

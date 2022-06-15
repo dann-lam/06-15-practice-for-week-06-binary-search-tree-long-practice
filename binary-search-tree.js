@@ -95,6 +95,7 @@ class BinarySearchTree {
     console.log(currentNode.val);
 
     this.inOrderTraversal(currentNode.right);
+
   }
 
   postOrderTraversal(currentNode = this.root) {
