@@ -139,17 +139,17 @@ class BinarySearchTree {
     //   if (shiftedNode.right) { queue.addToTail(shiftedNode.right) }
     // }
   }
-  breadthFirstForEach(cb) {
-    let queue = [this.root];
+  static breadthFirstForEach(node,cb) {
+    let queue = [node];
     //The callback is increasing count++
     while (queue.length) {
       let shiftedNode = queue.shift();
-        //  cb()
-        cb(shiftedNode)
+      //  cb()
+      cb(shiftedNode)
       if (shiftedNode.left) { queue.push(shiftedNode.left) }
       if (shiftedNode.right) { queue.push(shiftedNode.right) }
     }
-}
+  }
 
   // Depth First Traversal - Iterative
   depthFirstTraversal() {
@@ -161,6 +161,6 @@ class BinarySearchTree {
       if (poppedNode.left) { stack.push(poppedNode.left) }
       if (poppedNode.right) { stack.push(poppedNode.right) }
     }
-}
+  }
 }
 module.exports = { BinarySearchTree, TreeNode };

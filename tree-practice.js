@@ -4,27 +4,29 @@ const { BinarySearchTree, TreeNode } = require('./binary-search-tree.js');
 
 // Practice problems on binary trees
 
-function findMinBST (rootNode) {
- //Go left until next is null.
- if(!rootNode) return console.log("Stop!")
- let currNode = rootNode
- while(currNode.left){
-  currNode = currNode.left
- }
- return currNode.val
+function findMinBST(rootNode) {
+  //Go left until next is null.
+  if (!rootNode) return console.log("Stop!")
+  let currNode = rootNode
+  while (currNode.left) {
+    currNode = currNode.left
+  }
+  return currNode.val
 
 
 }
 
-function findMaxBST (rootNode) {
+function findMaxBST(rootNode) {
 
-  if(!rootNode) return console.log("Stop!")
+  if (!rootNode) return console.log("Stop!")
   let currNode = rootNode
 
-  if(!currNode.right){
+  if (!currNode.right) {
     return currNode.val
   }
-    return findMaxBST(currNode.right)
+  return findMaxBST(currNode.right)
+
+
 }
 
 
@@ -37,16 +39,16 @@ function findMaxBST (rootNode) {
   return currNode.val */
 
 
-function findMinBT (rootNode) {
+function findMinBT(rootNode) {
   let minVal = rootNode.val
 
-  if(!rootNode) return console.log("Stop! You have violated the law.")
+  if (!rootNode) return console.log("Stop! You have violated the law.")
 
   let queue = [rootNode];
 
   while (queue.length) {
     let shiftedNode = queue.shift();
-    if(shiftedNode.val < minVal){
+    if (shiftedNode.val < minVal) {
       minVal = shiftedNode.val
     }
     if (shiftedNode.left) { queue.push(shiftedNode.left) }
@@ -57,36 +59,44 @@ function findMinBT (rootNode) {
 }
 
 
-  //Should I iteratively or recursively traverse??
+//Should I iteratively or recursively traverse??
 
 
-  //Because it's not in order we have go through the entire tree.
-  //And I want to keep a variable to know what "min" is.
-  //We could use a traversal callback to ensure that we've walked through the entire tree.
-  //So each time we visit a node, we do a comparison between that node and our "smallest" variable.
-  //return the smallest num.
+//Because it's not in order we have go through the entire tree.
+//And I want to keep a variable to know what "min" is.
+//We could use a traversal callback to ensure that we've walked through the entire tree.
+//So each time we visit a node, we do a comparison between that node and our "smallest" variable.
+//return the smallest num.
 
-function findMaxBT (rootNode) {
-  let maxVal = rootNode.val
+function findMaxBT(rootNode) {
+  // let maxVal = rootNode.val
 
-  if(!rootNode) return console.log("Stop! You have violated the law.")
+  // if (!rootNode) return console.log("Stop! You have violated the law.")
 
-  let queue = [rootNode];
+  // let queue = [rootNode];
 
-  while (queue.length) {
-    let shiftedNode = queue.shift();
-    if(shiftedNode.val > maxVal){
-      maxVal = shiftedNode.val
-    }
-    if (shiftedNode.left) { queue.push(shiftedNode.left) }
-    if (shiftedNode.right) { queue.push(shiftedNode.right) }
+  // while (queue.length) {
+  //   let shiftedNode = queue.shift();
+  //   if (shiftedNode.val > maxVal) {
+  //     maxVal = shiftedNode.val
+  //   }
+  //   if (shiftedNode.left) { queue.push(shiftedNode.left) }
+  //   if (shiftedNode.right) { queue.push(shiftedNode.right) }
+  // }
+
+  // return maxVal
+
+  let max = -Infinity;
+  const updateMax = (node) => {
+    if (node.val > max) { max = node.val }
   }
 
-  return maxVal
+  BinarySearchTree.breadthFirstForEach(rootNode, updateMax);
+  return max;
 }
 
-function getHeight (rootNode) {
-  if(!rootNode) return console.log("Stop! You have violated the law.")
+function getHeight(rootNode) {
+  if (!rootNode) return -1
 
   let maxHeight = 0;
   rootNode.height = 0;
@@ -105,7 +115,7 @@ function getHeight (rootNode) {
       poppedNode.right.height = poppedNode.height + 1
       stack.push(poppedNode.right)
     }
-    if(maxHeight < poppedNode.height){
+    if (maxHeight < poppedNode.height) {
       maxHeight = poppedNode.height
     }
     // console.log(`Decremented height: ${maxHeight}`)
@@ -117,26 +127,46 @@ function getHeight (rootNode) {
 // How do I keep track of the height of a "path"
 //
 
-function countNodes (rootNode) {
+function countNodes(rootNode) {
   let count = 0;
 
-  let bt = new BinarySearchTree()
-
-  bt.root = rootNode
-
-  bt.breadthFirstForEach(() => count++)
+  BinarySearchTree.breadthFirstForEach(rootNode, () => count++)
   return count
 }
 
-function balancedTree (rootNode) {
+function balancedTree(rootNode) {
+  // Find the max height of left subtree and the max height of right subtree
+  // if the two heights are more than 1 apart, return false
+  // otherwise, check heights of further subtrees
+
+  //traverse
+  let stack = [rootNode];
+
+  while (stack.length) {
+    let poppedNode = stack.pop();
+
+    let leftHeight = -1; let rightHeight = -1;
+
+    if (poppedNode.left) {
+      leftHeight = getHeight(poppedNode.left);
+      stack.push(poppedNode.left);
+    }
+    if (poppedNode.right) {
+      rightHeight = getHeight(poppedNode.right);
+      stack.push(poppedNode.right)
+    }
+    if (Math.abs(leftHeight - rightHeight) > 1) {
+      return false;
+    }
+  }
+  return true;
+}
+
+function getParentNode(rootNode, target) {
   // Your code here
 }
 
-function getParentNode (rootNode, target) {
-  // Your code here
-}
-
-function inOrderPredecessor (rootNode, target) {
+function inOrderPredecessor(rootNode, target) {
   // Your code here
 }
 
@@ -163,14 +193,14 @@ function deleteNodeBST(rootNode, target) {
 }
 
 module.exports = {
-    findMinBST,
-    findMaxBST,
-    findMinBT,
-    findMaxBT,
-    getHeight,
-    countNodes,
-    balancedTree,
-    getParentNode,
-    inOrderPredecessor,
-    deleteNodeBST
+  findMinBST,
+  findMaxBST,
+  findMinBT,
+  findMaxBT,
+  getHeight,
+  countNodes,
+  balancedTree,
+  getParentNode,
+  inOrderPredecessor,
+  deleteNodeBST
 }
