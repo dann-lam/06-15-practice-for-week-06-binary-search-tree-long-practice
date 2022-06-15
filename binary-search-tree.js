@@ -6,37 +6,37 @@ class TreeNode {
     this.right = null;
   }
 }
-class LLNode {
-    constructor(val) {
-      this.val = val;
-      this.next = null;
-    }
-  }
+// class LLNode {
+//     constructor(val) {
+//       this.val = val;
+//       this.next = null;
+//     }
+//   }
 
-  class LinkedList {
-    constructor() {
-      this.head = null;
-      this.tail = null;
-    }
+//   class LinkedList {
+//     constructor() {
+//       this.head = null;
+//       this.tail = null;
+//     }
 
-    addToTail(val) {
-      if (!this.head) {
-        this.head = new LLNode(val);
-        this.tail = this.head;
-        return
-      }
+//     addToTail(val) {
+//       if (!this.head) {
+//         this.head = new LLNode(val);
+//         this.tail = this.head;
+//         return
+//       }
 
-      this.tail.next = new LLNode(val);
-      this.tail = this.tail.next;
-    }
+//       this.tail.next = new LLNode(val);
+//       this.tail = this.tail.next;
+//     }
 
-    removeFromHead() {
-      if (this.head === this.tail) { this.tail = null }
-      let dequeued = this.head;
-      this.head = this.head.next;
-      return dequeued;
-    }
-  }
+//     removeFromHead() {
+//       if (this.head === this.tail) { this.tail = null }
+//       let dequeued = this.head;
+//       this.head = this.head.next;
+//       return dequeued;
+//     }
+//   }
 class BinarySearchTree {
   constructor() {
     this.root = null;
@@ -109,24 +109,24 @@ class BinarySearchTree {
 
   // Breadth First Traversal - Iterative
   breadthFirstTraversal() {
-    // let queue = [this.root];
+    let queue = [this.root];
 
-    // while (queue.length) {
-    //   let shiftedNode = queue.shift();
-    //   console.log(shiftedNode.val)
-    //   if (shiftedNode.left) { queue.push(shiftedNode.left) }
-    //   if (shiftedNode.right) { queue.push(shiftedNode.right) }
-    // }
-
-    let queue = new LinkedList();
-    queue.addToTail(this.root);
-
-    while (queue.head) {
-      let shiftedNode = queue.removeFromHead().val;
+    while (queue.length) {
+      let shiftedNode = queue.shift();
       console.log(shiftedNode.val)
-      if (shiftedNode.left) { queue.addToTail(shiftedNode.left) }
-      if (shiftedNode.right) { queue.addToTail(shiftedNode.right) }
+      if (shiftedNode.left) { queue.push(shiftedNode.left) }
+      if (shiftedNode.right) { queue.push(shiftedNode.right) }
     }
+
+    // let queue = new LinkedList();
+    // queue.addToTail(this.root);
+
+    // while (queue.head) {
+    //   let shiftedNode = queue.removeFromHead().val;
+    //   console.log(shiftedNode.val)
+    //   if (shiftedNode.left) { queue.addToTail(shiftedNode.left) }
+    //   if (shiftedNode.right) { queue.addToTail(shiftedNode.right) }
+    // }
   }
 
   // Depth First Traversal - Iterative
