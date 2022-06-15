@@ -5,24 +5,117 @@ const { BinarySearchTree, TreeNode } = require('./binary-search-tree.js');
 // Practice problems on binary trees
 
 function findMinBST (rootNode) {
-  // Your code here
+ //Go left until next is null.
+ if(!rootNode) return console.log("Stop!")
+ let currNode = rootNode
+ while(currNode.left){
+  currNode = currNode.left
+ }
+ return currNode.val
+
+
 }
 
 function findMaxBST (rootNode) {
-  // Your code here
+
+  if(!rootNode) return console.log("Stop!")
+  let currNode = rootNode
+
+  if(!currNode.right){
+    return currNode.val
+  }
+    return findMaxBST(currNode.right)
 }
+
+
+/*  if(!rootNode) return console.log("Stop!")
+  let currNode = rootNode
+
+  if(currNode.right){
+    return findMaxBST(currNode.right)
+  }
+  return currNode.val */
+
 
 function findMinBT (rootNode) {
-  // Your code here
+  let minVal = rootNode.val
+
+  if(!rootNode) return console.log("Stop! You have violated the law.")
+
+  let queue = [rootNode];
+
+  while (queue.length) {
+    let shiftedNode = queue.shift();
+    if(shiftedNode.val < minVal){
+      minVal = shiftedNode.val
+    }
+    if (shiftedNode.left) { queue.push(shiftedNode.left) }
+    if (shiftedNode.right) { queue.push(shiftedNode.right) }
+  }
+
+  return minVal
 }
 
+
+  //Should I iteratively or recursively traverse??
+
+
+  //Because it's not in order we have go through the entire tree.
+  //And I want to keep a variable to know what "min" is.
+  //We could use a traversal callback to ensure that we've walked through the entire tree.
+  //So each time we visit a node, we do a comparison between that node and our "smallest" variable.
+  //return the smallest num.
+
 function findMaxBT (rootNode) {
-  // Your code here
+  let maxVal = rootNode.val
+
+  if(!rootNode) return console.log("Stop! You have violated the law.")
+
+  let queue = [rootNode];
+
+  while (queue.length) {
+    let shiftedNode = queue.shift();
+    if(shiftedNode.val > maxVal){
+      maxVal = shiftedNode.val
+    }
+    if (shiftedNode.left) { queue.push(shiftedNode.left) }
+    if (shiftedNode.right) { queue.push(shiftedNode.right) }
+  }
+
+  return maxVal
 }
 
 function getHeight (rootNode) {
-  // Your code here
+  if(!rootNode) return console.log("Stop! You have violated the law.")
+
+  let maxHeight = 0;
+  rootNode.height = 0;
+  let stack = [rootNode];
+
+  while (stack.length) {
+
+    let poppedNode = stack.pop();
+    //Give nodes properties
+    if (poppedNode.left) {
+      poppedNode.left.height = poppedNode.height + 1
+      stack.push(poppedNode.left)
+      //Math method to return max.
+    }
+    if (poppedNode.right) {
+      poppedNode.right.height = poppedNode.height + 1
+      stack.push(poppedNode.right)
+    }
+    if(maxHeight < poppedNode.height){
+      maxHeight = poppedNode.height
+    }
+    // console.log(`Decremented height: ${maxHeight}`)
+  }
+
+  return maxHeight;
 }
+// "How do I keep track of my height while "traversing" a tree"
+// How do I keep track of the height of a "path"
+//
 
 function countNodes (rootNode) {
   // Your code here

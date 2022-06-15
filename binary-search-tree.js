@@ -140,5 +140,5 @@ class BinarySearchTree {
       if (poppedNode.right) { stack.push(poppedNode.right) }
     }
 }
-
+}
 module.exports = { BinarySearchTree, TreeNode };
